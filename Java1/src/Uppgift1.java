@@ -81,12 +81,37 @@ public class Uppgift1 {
 		int charCount = 0;														//Skapa en variabel för att räkna antal bokstäver
 		char temp;																//Skapa en temporär variabel för att plocka ut alla bokstäver ur orden
 		
+		/*String characters = "q1w2E3r4T5y 9$0%a-s^d";
+		 
+		 // we take the length of characters by length()
+		 int length = characters.length();
+		 
+		 // we than loop each character one by one 
+		 for(int i = 0; i < length; i++) {
+		           // we store each character in a variable
+		    // for each loop
+		    char character = characters.charAt(i);
+		         
+		    // checking for each character that its a letter or not
+		    // by calling Character class isLetter() method , by passing
+		    // the character. It returns true if the character passed is
+		    // letter or an alphabet
+		    if(Character.isLetter(character)) {
+		  System.out.println("Given character : " + characters.charAt(i) + " is a letter");
+		    }
+		    else {
+		  System.out.println("Given character : " + characters.charAt(i) + " is not a letter");*/
+		
+		
 		for( int i = 0; i < mening.length( ); i++ )								//For loop som räknar alla tecken i strängen
 		{
 		    temp = mening.charAt( i );											//Plocka ut ett tecken ur strängen och placera det i temp variabeln
-
-		    if( temp != ' ' )													//Kolla om tecknet är ett mellanslag eller inte
-		    	charCount++;													//Om tecknet inte är mellanslag så räkna upp antalet bokstäver
+		    
+		    if( temp != ' ' ) {													//Kolla om tecknet är ett mellanslag eller inte
+		    																	//om inte mellanslag kolla om tecknet är alfabetiskt
+		    	if (Character.isLetter(temp))									//Kolla om tecknet är alfabetiskt eller inte
+		    		charCount++;												//om det är alfabetiskt öka på charCount
+		    }
 		}
 		
 		return charCount;														//Återför variabeln charCount
