@@ -25,8 +25,9 @@ public class Uppgift1 {
 				str = (String) br.readLine();													//För över din mening från bufferedreadern till variabeln str
 				if (!str.isEmpty()) {															//Kolla om det är en tom sträng i så fall tillbaka till huvudmenyn
 					count = ordCount(str);														//Anrop av metoden för att räkna ord
-				
-					System.out.println("Det är " + count + " ord i din mening");				//Skriv ut antal ord i din meningen
+					if (count != 0) {															//Kollar att count inte är noll, då skrivs inget ut
+						System.out.println("Det är " + count + " ord i din mening");			//Skriv ut antal ord i din mening
+					}
 				}	
 			}
 			else if (input.equalsIgnoreCase("b")) {												//Kolla om input är lika med strängen "b"
@@ -67,11 +68,22 @@ public class Uppgift1 {
 	}
 	
 	private static int ordCount(String mening) {
-		int count;																//Skapa variabeln count av typen int som används för att räkna ord
-				
-		String[] words = mening.split("\\s+");									//Använd split och lägg orden i en array av strängar
-				
-		count = words.length;													//Kontrollera antal strängar och placera värdet i count[0]
+		int count = 0;															//Skapar variabeln count av typen int som används för att räkna ord
+		char temp;																//Skapar en variabel av typen char för att kolla vad det är för tecken
+		String[] words = null;													//Skapar en array av typen String[] och nollar den
+		
+		for( int i = 0; i < mening.length( ); i++ )								//For loop som räknar alla tecken i strängen mening
+		{
+		    temp = mening.charAt( i );											//Plocka ut ett tecken ur strängen och placera det i temp variabeln
+		    		    
+		    	if( temp != ' ' ) {												//Kollar att det inte är ett mellanslag		
+
+		    			words = mening.split("\\S+");							//Använd split och lägg orden i en array av strängar
+		    		
+		    			count = words.length;									//Placera längden på words arrayen i variabeln count
+		    			break;													//Avbryter for loopen
+		    		} else count = 0;											//Sätter variabeln count till noll ifall den hittat ett mellanslag
+				} 
 		
 		return count;															//Återför variabeln count
 	}
@@ -80,28 +92,6 @@ public class Uppgift1 {
 			
 		int charCount = 0;														//Skapa en variabel för att räkna antal bokstäver
 		char temp;																//Skapa en temporär variabel för att plocka ut alla bokstäver ur orden
-		
-		/*String characters = "q1w2E3r4T5y 9$0%a-s^d";
-		 
-		 // we take the length of characters by length()
-		 int length = characters.length();
-		 
-		 // we than loop each character one by one 
-		 for(int i = 0; i < length; i++) {
-		           // we store each character in a variable
-		    // for each loop
-		    char character = characters.charAt(i);
-		         
-		    // checking for each character that its a letter or not
-		    // by calling Character class isLetter() method , by passing
-		    // the character. It returns true if the character passed is
-		    // letter or an alphabet
-		    if(Character.isLetter(character)) {
-		  System.out.println("Given character : " + characters.charAt(i) + " is a letter");
-		    }
-		    else {
-		  System.out.println("Given character : " + characters.charAt(i) + " is not a letter");*/
-		
 		
 		for( int i = 0; i < mening.length( ); i++ )								//For loop som räknar alla tecken i strängen
 		{
