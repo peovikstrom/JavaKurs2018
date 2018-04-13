@@ -68,7 +68,7 @@ public class Tidsbokning1 {
 						String startTidString = boknDatumLista.get(i)[0].format(formatterTime);
 						String slutTidString = boknDatumLista.get(i)[1].format(formatterTime);
 						
-						DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-DD");
+						DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 						
 						String bokningsDatumString = boknDatumLista.get(i)[0].format(formatterDate);
 						
