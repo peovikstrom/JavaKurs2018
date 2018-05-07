@@ -34,7 +34,7 @@ public class Tidsbokning3 {
 		while (!input.equalsIgnoreCase("q")) {													//Kör while satsen så länge inte någon trycker på "q"											
 			LocalDateTime[] q = new LocalDateTime[2];
 			System.out.println("Choose (b) for booking, (c) to check allready made bookings or quit(q)");	//Skriv ut vilka val du kan göra
-			System.out.println("Following Hairdressers are working today " + frisor.get(0).frisorName + " " + frisor.get(1).frisorName + " " + frisor.get(2).frisorName);
+			//System.out.println("Following Hairdressers are working today " + frisor.get(0).frisorName + " " + frisor.get(1).frisorName + " " + frisor.get(2).frisorName);
 			input = scanner.nextLine();															
 			Bokning newBokning = null;
 			if (input.equalsIgnoreCase("b")) {
@@ -51,7 +51,7 @@ public class Tidsbokning3 {
 					
 					startTid = LocalDateTime.parse(boknDatum + " " + boknStartTid, formatter);
 					slutTid = LocalDateTime.parse(boknDatum + " " + boknSlutTid, formatter);
-					uppskPris = 100;
+					uppskPris = 0;
 					
 					newBokning = new Bokning(startTid,slutTid,uppskPris);
 				}
@@ -63,19 +63,15 @@ public class Tidsbokning3 {
 					for (Frisor f : frisor) {
 						if (f.isFrisorFree(newBokning)) {
 							f.addBokning(newBokning);
-							ingenLedig = false;
-							//break;
-						} else {
 							ingenLedig = true;
-						}
-						if (ingenLedig) {
-								System.out.println("No Hairdresser is free that time.");
-						} else {
-							ingenLedig = true;
-						}
-						
-					} 
-			}
+							break;
+						} 
+					} if (ingenLedig) {
+						System.out.println("Booked!");
+					} else {
+							System.out.println("No Hairdresser is free that time.");
+						} 
+			} 
 			if (input.equalsIgnoreCase("c")) {
 				System.out.print("Frisör "); kalle.getFrisorName(); System.out.print(" "); kalle.printBokning();
 				System.out.print("Frisör "); svenne.getFrisorName(); System.out.print(" "); svenne.printBokning();

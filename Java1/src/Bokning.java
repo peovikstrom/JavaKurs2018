@@ -29,8 +29,19 @@ public class Bokning {
 
 	@Override
 	public String toString() {
+		if ((slutTid.getHour() - startTid.getHour()) < 1) {
+			uppskPris = 75;
+		} else
+			{ if ((slutTid.getHour() - startTid.getHour()) > 1) {
+				uppskPris = 150 + ((slutTid.getHour() - startTid.getHour()) * 50);
+			} else { 
+					if ((slutTid.getHour() - startTid.getHour()) == 1) {
+						uppskPris = 150;
+					}
+				}
+			}
 		String strStart = startTid.getYear() + "-" + addZeroToInt(startTid.getMonthValue()) + "-" + addZeroToInt(startTid.getDayOfMonth()) + " " + addZeroToInt(startTid.getHour()) + ":" + addZeroToInt(startTid.getMinute());
-		strStart += " - " + addZeroToInt(slutTid.getHour()) + ":" + addZeroToInt(slutTid.getMinute());
+		strStart += " - " + addZeroToInt(slutTid.getHour()) + ":" + addZeroToInt(slutTid.getMinute()) + " Uppskattat pris: " + uppskPris + "kr";
 		return strStart;	
 	}
 
