@@ -20,6 +20,16 @@ public class Uppgift3 {
 				//Plocka ur samtliga dubletter ur en Array av integers.
 				int[] arrayOfInt = new int[] {10,20,30,40,50,50,40,30,20,10};
 				
+				System.out.print("All Elements in Int Array is : [");
+		        for(int i = 0; i < arrayOfInt.length; i++) {
+		        	if (i < 9) {
+		        	 System.out.print(arrayOfInt[i] + ", ");
+		        	} else {
+		        		System.out.print(arrayOfInt[i]);
+		        		}
+		        	}
+		        System.out.print("]");
+		        System.out.println();
 				for (int i = 0; i < arrayOfInt.length-1; i++)
 		        {
 		            for (int j = i+1; j < arrayOfInt.length; j++)
@@ -30,7 +40,7 @@ public class Uppgift3 {
 		                }
 		            }
 		        }
-			} else {
+			} else 
 				if (input.equalsIgnoreCase("s")) {
 					//Plocka ut samtliga dubletter ur ett Set av integers.
 					int setOfInt[] = {1,2,3,4,5,5,4,3,2,1};
@@ -47,10 +57,11 @@ public class Uppgift3 {
 			        		System.out.print(setOfInt[i]);
 			        		}
 			        	}
-					
-			        System.out.println("] Elements in Set is : " + set);
+			        System.out.println("]");
+			        System.out.println();
+			        System.out.println("Elements in Set is : " + set);
 				
-			} else {
+			} else 
 				if (input.equalsIgnoreCase("l")) {
 			        //List, lägg till ett värde i slutet.
 			        List<Integer> listaOfInt = new ArrayList<Integer>();
@@ -62,10 +73,9 @@ public class Uppgift3 {
 			                
 					System.out.println("Elements in List is : " + listaOfInt);
 					listaOfInt.add(80);
-					System.out.println("Element added!");
+					System.out.println("Element added at the end of List!");
 					System.out.println("Elements in List is : " + listaOfInt);
-				}
-			} else {
+			} else 
 					if (input.equalsIgnoreCase("r")) {
 						//Plocka bort första givna värdet ur en Array av integers.
 						int[] arrOfInt = new int[] {10,20,30,40,50,50,40,30,20,10};
@@ -73,7 +83,7 @@ public class Uppgift3 {
 				
 						System.out.print("All Elements in Int Array is : [");
 				        for(int i = 0; i < arrOfInt.length; i++) {
-				        	if (i < 9) {
+				        	if (i < (arrOfInt.length - 1)) {
 				        	 System.out.print(arrOfInt[i] + ", ");
 				        	} else {
 				        		System.out.print(arrOfInt[i]);
@@ -112,13 +122,34 @@ public class Uppgift3 {
 				        	}
 				        }
 				        System.out.print("] ");
-					}
-				
-			} else {
+				        System.out.println();
+					
+			} else 
 					if (input.equalsIgnoreCase("m")) {  
 						//Skriv ut en map med key som integer och string som värde.
 				        int[] intMapKey = {8,31,12,14};  
 				        String[] strMapValue = {"Kalle","Agnes","Hugo","Josefin"};
+				        System.out.print("Map Keys are : [");
+				        for(int i = 0; i < intMapKey.length; i++) {
+				        	if (i < (intMapKey.length - 1)) {
+				        	 System.out.print(intMapKey[i] + ", ");
+				        	} else {
+				        		System.out.print(intMapKey[i]);
+				        		}
+				        	}
+				        System.out.print("]");
+				        System.out.println();
+				        
+				        System.out.print("Map Values is : [");
+				        for(int i = 0; i < strMapValue.length; i++) {
+				        	if (i < (strMapValue.length - 1)) {
+				        	 System.out.print(strMapValue[i] + ", ");
+				        	} else {
+				        		System.out.print(strMapValue[i]);
+				        		}
+				        	}
+				        System.out.print("]");
+				        System.out.println();
 				        Map m1 = new HashMap();
 				        for (int k = 0; k < intMapKey.length; k++) {
 				        	m1.put(intMapKey[k], strMapValue[k]);
@@ -126,19 +157,15 @@ public class Uppgift3 {
 				        System.out.println();
 				        System.out.println("Map Elements " + m1);
 					}
-		
-			}
-		
-		
-		
+		}
 	}
-
-	private static Object resizeArray (Object oldArray, int newSize) { //Plockad kod från nätet, förstår principen bakom denna.
-		   int oldSize = java.lang.reflect.Array.getLength(oldArray);  //Den kopierar den array man skickar in till den nya arrayen 
-		   Class elementType = oldArray.getClass().getComponentType(); //och använder den storleken man skickar in på den nya arrayen.	
-		   Object newArray = java.lang.reflect.Array.newInstance(elementType, newSize); //Som sen returneras.
-		   int preserveLength = Math.min(oldSize, newSize);
-		   if (preserveLength > 0)
-		      System.arraycopy(oldArray, 0, newArray, 0, preserveLength);
-		   return newArray; }
+					private static Object resizeArray (Object oldArray, int newSize) { //Plockad kod från nätet, förstår principen bakom denna.
+						   int oldSize = java.lang.reflect.Array.getLength(oldArray);  //Den kopierar den array man skickar in till den nya arrayen 
+						   Class elementType = oldArray.getClass().getComponentType(); //och använder den storleken man skickar in på den nya arrayen.	
+						   Object newArray = java.lang.reflect.Array.newInstance(elementType, newSize); //Som sen returneras.
+						   int preserveLength = Math.min(oldSize, newSize);
+						   if (preserveLength > 0)
+						      System.arraycopy(oldArray, 0, newArray, 0, preserveLength);
+						   return newArray; }		
+			
 }
