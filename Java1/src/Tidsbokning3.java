@@ -37,6 +37,7 @@ public class Tidsbokning3 {
 			//System.out.println("Following Hairdressers are working today " + frisor.get(0).frisorName + " " + frisor.get(1).frisorName + " " + frisor.get(2).frisorName);
 			input = scanner.nextLine();															
 			Bokning newBokning = null;
+			boolean checkIfWrongInput = true;
 			if (input.equalsIgnoreCase("b")) {
 				
 				try {
@@ -54,11 +55,12 @@ public class Tidsbokning3 {
 					uppskPris = 0;
 					
 					newBokning = new Bokning(startTid,slutTid,uppskPris);
-				}
-					catch (DateTimeException e) {
-						System.out.println("Wrong date or time format. Date should be YYYY-MM-DD, Time HH:MM.");
 					}
-				
+						catch (DateTimeException e) {
+							System.out.println("Wrong date or time format. Date should be YYYY-MM-DD, Time HH:MM.");
+							checkIfWrongInput = false;
+						}
+					if (checkIfWrongInput) {
 					boolean ingenLedig = false;
 					for (Frisor f : frisor) {
 						if (f.isFrisorFree(newBokning)) {
@@ -71,6 +73,7 @@ public class Tidsbokning3 {
 					} else {
 							System.out.println("No Hairdresser is free that time.");
 						} 
+					}
 			} 
 			if (input.equalsIgnoreCase("c")) {
 				System.out.print("Frisör "); kalle.getFrisorName(); System.out.print(" "); kalle.printBokning();
