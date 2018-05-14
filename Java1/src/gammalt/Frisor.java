@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Frisor {
 	
-	List<Bokning> bokningar = new ArrayList<Bokning>();
+	List<Bokning> bokningar = new ArrayList<>();
 	String frisorName;
 	
 	public Frisor(String frisorName) {
