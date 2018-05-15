@@ -2,13 +2,12 @@ package Affär;
 
 public class Kundvagn extends Storage<Item> {
 
-	public String getOneItem(String itemToGet) {
+	public Item getOneItem(int itemToGet) {
 	    for(Item itemsToGet : storage) {
-	    		if(itemToGet.equalsIgnoreCase(itemsToGet.getDescription())) {
-		            return itemsToGet.toString();
-		        } 
-		    }
-	    return itemToGet = "No items found!";
+	    		if(itemToGet == itemsToGet.getArtNumber()) {
+	    			return itemsToGet;
+		        }  
+		    } return null;
 	}
 	
 	public int countValueOfShoppingCart() {

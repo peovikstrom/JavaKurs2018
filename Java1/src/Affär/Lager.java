@@ -5,22 +5,24 @@ import java.util.stream.Collectors;
 
 public class Lager extends Storage<Item> {
 	
-	public void searchArticleDescr(String searchObject) {
+	public Item searchArticleDescr(String searchObject) {
 		List<Item> result = new ArrayList<>(); 
 				result = storage
 				.stream()
-				.filter(item -> item.getDescription() == searchObject)
+				.filter(item -> item.getDescription().toLowerCase().contains(searchObject.toLowerCase()))
 				.collect(Collectors.toList());
 		if(result.isEmpty()) {
 			System.out.println("No such item exist in storage!");
 		} else {
 				for (Item item : result) {
 					System.out.println(item.toString());
+					return item;
 				}
 		}
+		return null;
 	}
 	
-	public void searchArticleNumb(int searchObject) {
+	public Item searchArticleNumb(int searchObject) {
 		List<Item> result = new ArrayList<>(); 
 				result = storage
 				.stream()
@@ -31,8 +33,9 @@ public class Lager extends Storage<Item> {
 		} else {
 			for (Item item : result) {
 				System.out.println(item.toString());
+				return item;
 			}
-		}
+		} return null;
 	}
 	
 	public void searchPrice(int searchObject) {
@@ -50,13 +53,23 @@ public class Lager extends Storage<Item> {
 		}
 	}
 	
-	public void searchItem(String itemToFind) {
+	public boolean searchItem(String itemToFind) {
+		boolean check = false;
+		boolean check1 = false;
 		try {
 			Integer value = Integer.parseInt(itemToFind);
 			searchArticleNumb(value);
+			check1 = true;
 		} 
 		catch (NumberFormatException e) {
 			searchArticleDescr(itemToFind);
+		}
+		if (check1) {
+			check = true;
+			return check;
+		} else {
+			check = false;
+			return check;
 		}
 	}
 }

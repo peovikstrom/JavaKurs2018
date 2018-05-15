@@ -5,10 +5,14 @@ public class Storage<T> {
 		
 	List<T> storage = new ArrayList<>();
 	
-	public void getAllItems() {
+	public void printAllItems() {
 		//storage.forEach(System.out::println);
 		for (T element : storage) //Exempel för att se vad i princip raden ovan gör.
 			System.out.println(element.toString());
+	}
+	
+	public T getItem(T newItem) {
+		return newItem;	
 	}
 	
 	public void addItem(T newItem) {
