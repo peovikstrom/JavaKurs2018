@@ -37,7 +37,7 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		
+
 		String strItem = description + "\t" + "Articlenumber: " + artNumber + "\t" + "Price: " + price + "kr";
 		
 		return strItem;

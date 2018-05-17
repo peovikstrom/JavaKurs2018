@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class Lager extends Storage<Item> {
 	
-	public Item searchArticleDescr(String searchObject) {
+	public void searchArticleDescr(String searchObject) {
 		List<Item> result = new ArrayList<>(); 
 				result = storage
 				.stream()
@@ -16,10 +16,8 @@ public class Lager extends Storage<Item> {
 		} else {
 				for (Item item : result) {
 					System.out.println(item.toString());
-					return item;
-				}
+				} 
 		}
-		return null;
 	}
 	
 	public Item searchArticleNumb(int searchObject) {
