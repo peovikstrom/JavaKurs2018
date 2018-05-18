@@ -14,75 +14,87 @@ public class Main {
 		
 		while (!input.equalsIgnoreCase("q")) {
 			List<Integer> value = new ArrayList<>();
-			float valuediv1 = 0;
-			float valuediv2 = 0;
-			Integer value1 = 0;
-			Integer value2 = 0;
 			Integer sum = 0;
-			float sumdiv = 0; 
+			Integer diff = 0;
+			
+			float multipl1 = 0;
+			float multipl2 = 0;
+			float produkt = 0;
+			
+			float taljare = 0;
+			float namnare = 0;
+			float kvot = 0; 
 			System.out.println("choose (a) to add, choose (s) to subtract, choose (m) to multiply, choose (d) to divide or (q) to quit");
 			input = scanner.nextLine();
 			if (input.equalsIgnoreCase("a")) {
-				System.out.println("Skriv in två tal, eller flera, att addera, summera genom att skriva in '='");
+				System.out.println("Skriv in två tal, eller flera, att Addera. Summera genom att skriva in '='");
 				while (!input.equalsIgnoreCase("=")) {
 					input = scanner.nextLine();
 					if (!input.equals("=")) {
-						value.add(typeInValue(input));
+						value.add(typeInIntValue(input));
 					}
 				}
 				for (int i = 0; i < value.size(); i++) {
 					sum = sum + value.get(i);
 				}
 				System.out.println();
-				System.out.println("Summan är: " + sum);
+				System.out.println("Summan blev: " + sum);
 			} else {
 				if (input.equalsIgnoreCase("s")) {
-					System.out.println("Skriv in två tal, eller flera, att Subtrahera, subtrahera genom att skriva in '='");
+					System.out.println("Skriv in två tal, eller flera, att Subtrahera. Subtrahera genom att skriva in '='");
 					while (!input.equalsIgnoreCase("=")) {
 						input = scanner.nextLine();
 						if (!input.equals("=")) {
-							value.add(typeInValue(input));
+							value.add(typeInIntValue(input));
 						} 
 					}
-					value.sort(Comparator.reverseOrder());
-					//Collections.reverse(value);
-					System.out.println(value);
 					for (int i = 0; i < value.size(); i++) {
-							sum = value.get(i) - sum;
-							System.out.println(sum + " " + value.get(i));
+							if (i == 0) {
+								diff = value.get(i);
+							} else {
+								diff = diff - value.get(i);
+							}
 					}
 					System.out.println();
-					System.out.println("Summan är: " + sum);
+					System.out.println("Differensen blev: " + diff);
 				} else {
 					if (input.equalsIgnoreCase("m")) {
 						System.out.println("Skriv in två tal, att multiplicera:");
 						System.out.print("Tal1: "); input = scanner.nextLine();
-						value1 = (typeInValue(input));
-						System.out.print("Tal2: "); input = scanner.nextLine();
-						value2 = (typeInValue(input));
-						sum = value1 * value2;
-						System.out.println();
-						System.out.println(value1 + " * " + value2 + " = " + sum);
-						System.out.println();
+						multipl1 = (typeInFloatValue(input));
+						if (!(multipl1 == -1)) {
+							System.out.print("Tal2: "); input = scanner.nextLine();
+							multipl2 = (typeInFloatValue(input));
+							if (!(multipl2 == -1)) {
+									produkt = multipl1 * multipl2;
+									System.out.println();
+									System.out.println("Produkten blev: " + produkt);
+									System.out.println();
+							}
+						}
 					} else {
 						if (input.equalsIgnoreCase("d")) {
 								boolean check = false;
-								System.out.println("Skriv in två tal, att diviera:");
-								System.out.print("Tal1: "); input = scanner.nextLine();
-								valuediv1 = (typeInValue(input));
-										System.out.print("Tal2: "); input = scanner.nextLine();
-										valuediv2 = (typeInValue(input));
-										if (valuediv2 == 0) {
+								System.out.println("Skriv in två tal, att dividera:");
+								System.out.print("Täljare: "); input = scanner.nextLine();
+								taljare = (typeInFloatValue(input));
+								if (!(taljare == -1)) {
+									System.out.print("Nämnare: "); input = scanner.nextLine();
+									namnare = (typeInFloatValue(input));
+									if (!(namnare == -1)) {
+										if (namnare == 0) {
 											check = true;
 										}
-								if (!check) {
-										sumdiv = valuediv1 / valuediv2;
-										System.out.println();
-										System.out.println(valuediv1 + " / " + valuediv2 + " = " + sumdiv);
-										System.out.println();
-									} else {
-										System.out.println();
-										System.out.println("Talet man delar med får inte vara noll!");
+											if (!check) {
+												kvot = taljare / namnare;
+												System.out.println();
+												System.out.println("Kvoten blev: " + kvot);
+												System.out.println();
+											} else {
+												System.out.println();
+												System.out.println("Täljaren får inte vara noll!");
+											}
+										}
 									}
 								}
 							}
@@ -91,15 +103,26 @@ public class Main {
 				} scanner.close();
 			}
 
-	private static Integer typeInValue(String input) {
+	private static Integer typeInIntValue(String input) {
 		Integer value = 0;
 		try {
 			value = Integer.parseInt(input);
 		} catch (NumberFormatException e) {
 			System.out.println();
-			System.out.println("You need to type in numbers!");
+			System.out.println("You need to type in numbers! Please type in new number.");
 		}
 	 return value;	
 	}
 	
+	private static float typeInFloatValue(String input) {
+		float value = 0;
+		try {
+			value = Float.parseFloat(input);
+		} catch (NumberFormatException e) {
+			value = -1;
+			System.out.println();
+			System.out.println("You need to type in numbers! Please try again.");
+		}
+	 return value;	
+	}
 }
