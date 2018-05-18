@@ -1,4 +1,9 @@
 
-public class Person {
+public class Person implements Runnable {
+
+	@Override
+	public void run() {
+		
+	}
 
 }
