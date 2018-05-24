@@ -58,7 +58,7 @@ public class Uppgift3 {
 			        	}
 			        System.out.println("]");
 			        System.out.println();
-			        System.out.println("Elements in Set is : " + set);
+			        System.out.println("Elements in Set is: " + set);
 				
 			} else 
 				if (input.equalsIgnoreCase("l")) {
@@ -70,7 +70,7 @@ public class Uppgift3 {
 			        listaOfInt.add(40);
 			        listaOfInt.add(50);
 			                
-					System.out.println("Elements in List is : " + listaOfInt);
+					System.out.println("Elements in List is: " + listaOfInt);
 					listaOfInt.add(80);
 					System.out.println("Element added at the end of List!");
 					System.out.println("Elements in List is : " + listaOfInt);
