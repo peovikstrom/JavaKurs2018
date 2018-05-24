@@ -1,5 +1,6 @@
 import java.util.Random;
 
+
 public class Elevator implements Runnable {
 	int floorAt = 0;
 	boolean doorsOpened = false;
@@ -7,25 +8,35 @@ public class Elevator implements Runnable {
 	
 	@Override
 	public void run() {
-		Random rnd = new Random();
+		//Random rnd = new Random();
+		Person person = new Person();
 		setFloorAt(0);
-		System.out.println("Going up!");
 		System.out.println("Elevator at floor: " + getFloorAt());
+		boolean doorsopen = openDoors();
+		if (doorsopen) {
+			System.out.println("Doors are open!");
+		}
+		int  rndInt = person.pressedButtonAt();
+		
+		if (rndInt != -1) {
+			if (rndInt != getFloorAt()) {
+				System.out.println("Someone pressed button on floor: " + rndInt);
+			}
+		}
+		
 		for (int i = 0; getFloorAt() < 5; i++) {
-			boolean  rndBool = rnd.nextBoolean();
-			checkDoors(rndBool);
 			movingElevator(true);
 		}
-		System.out.println("Elevator at floor: " + getFloorAt());
+		/*System.out.println("Elevator at floor: " + getFloorAt());
 		System.out.println();
 		System.out.println("Going down!");
 		System.out.println("Elevator at floor: " + getFloorAt());
 		for (int i = 5; getFloorAt() > 0; i--) {
-			boolean  rndBool = rnd.nextBoolean();
-			checkDoors(rndBool);
+			//boolean  rndBool = rnd.nextBoolean();
+			
 			movingElevator(false);
 		}
-		System.out.println("Elevator at floor: " + getFloorAt());
+		System.out.println("Elevator at floor: " + getFloorAt());*/
 	}
 	
 	private boolean openDoors() {
@@ -90,7 +101,6 @@ public class Elevator implements Runnable {
 			if (check) {
 				System.out.println("Elevator at floor: " + getFloorAt());
 			}
-		
 		}
 	}
 	
