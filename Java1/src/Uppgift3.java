@@ -1,4 +1,3 @@
-import java.time.LocalDateTime;
 import java.util.*;
 public class Uppgift3 {
 
@@ -157,7 +156,7 @@ public class Uppgift3 {
 				        System.out.println();
 				        System.out.println("Map Elements " + m1);
 					}
-		}
+		} scanner.close();
 	}
 					private static Object resizeArray (Object oldArray, int newSize) { //Plockad kod från nätet, förstår principen bakom denna.
 						   int oldSize = java.lang.reflect.Array.getLength(oldArray);  //Den kopierar den array man skickar in till den nya arrayen 
