@@ -1,4 +1,4 @@
-package gammalt;
+
 import java.time.LocalDateTime;
 import java.util.*;
 public class Uppgift3 {
