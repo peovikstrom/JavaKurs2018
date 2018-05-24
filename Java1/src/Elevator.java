@@ -27,16 +27,6 @@ public class Elevator implements Runnable {
 		for (int i = 0; getFloorAt() < 5; i++) {
 			movingElevator(true);
 		}
-		/*System.out.println("Elevator at floor: " + getFloorAt());
-		System.out.println();
-		System.out.println("Going down!");
-		System.out.println("Elevator at floor: " + getFloorAt());
-		for (int i = 5; getFloorAt() > 0; i--) {
-			//boolean  rndBool = rnd.nextBoolean();
-			
-			movingElevator(false);
-		}
-		System.out.println("Elevator at floor: " + getFloorAt());*/
 	}
 	
 	private boolean openDoors() {
