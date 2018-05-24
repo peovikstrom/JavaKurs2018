@@ -53,9 +53,16 @@ public class Tidsbokning3 {
 						slutTid = LocalDateTime.parse(boknDatum + " " + boknSlutTid, formatter);
 						uppskPris = 0;
 						
-						int bStT = Integer.parseInt("" + startTid.getHour() + startTid.getMinute());
-						int bSlT = Integer.parseInt("" + slutTid.getHour() + slutTid.getMinute());
-	
+						int bStThour = Integer.parseInt("" + startTid.getHour());
+						String starthour= addZeroToInt(bStThour);
+						int bStTmin = Integer.parseInt("" + startTid.getMinute());
+						String startmin = addZeroToInt(bStTmin);
+						int bSlThour = Integer.parseInt("" + slutTid.getHour());
+						String endhour = addZeroToInt(bSlThour);
+						int bSlTmin = Integer.parseInt("" + slutTid.getMinute());
+						String endmin = addZeroToInt(bSlTmin);
+						int bStT = Integer.parseInt(starthour + startmin);
+						int bSlT = Integer.parseInt(endhour + endmin);
 						if (bStT < bSlT) {
 							newBokning = new Bokning(startTid,slutTid,uppskPris);
 							} else {
@@ -90,4 +97,13 @@ public class Tidsbokning3 {
 			}
 		} scanner.close();
 	}
+	
+	private static String addZeroToInt(int integer) {
+		if(integer < 10) {
+			return "0" + integer;
+		} else {
+			return integer + "";
+		}
+	}
+	
 }			
