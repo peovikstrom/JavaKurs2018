@@ -1,55 +1,86 @@
-import java.util.Random;
+import java.lang.reflect.Array;
+import java.util.*;
 
 
 public class Elevator implements Runnable {
-	int floorAt = 0;
+	int floorat = 0;
 	boolean doorsOpened = false;
 	boolean doorsClosed = false;
 	
 	@Override
 	public void run() {
-		//Random rnd = new Random();
-		Person person = new Person();
-		setFloorAt(0);
-		System.out.println("Elevator at floor: " + getFloorAt());
-		boolean doorsopen = openDoors();
-		if (doorsopen) {
-			System.out.println("Doors are open!");
-		}
-		int  rndInt = person.pressedButtonAt();
-		
-		if (rndInt != -1) {
-			if (rndInt != getFloorAt()) {
-				System.out.println("Someone pressed button on floor: " + rndInt);
+		Random rndint = new Random();
+		Random rndbool = new Random();
+		List<Person> personlist = new ArrayList<Person>();
+		//if (rndbool.nextBoolean()) {
+			Elevator elevator = new Elevator();
+			setFloorAt(0);
+			doorsOpened = true;
+			Person person = new Person();
+			person.setOnFloorAt(4);
+			person.setGetOffFloor(0);
+			person.setGetOnFloor(4);
+			personlist.add(person);
+			
+		//}	
+		System.out.println("Person at "  + person.getOnFloorAt());
+		System.out.println("Going to " + person.getGetOffFloor());
+		System.out.println("Elevator at floor: " + floorat);
+		checkDoors();
+		changeDoors();
+		checkDoors();
+		while (floorat != person.getGetOnFloor()) {
+			if (floorat < person.getGetOnFloor()) {  
+				movingElevator(true);
+				//person.setOnFloorAt(floorat);
+			} else {
+				movingElevator(false);
+				//person.setOnFloorAt(floorat);
 			}
+				 
 		}
-		
-		for (int i = 0; getFloorAt() < 5; i++) {
-			movingElevator(true);
-		}
+		System.out.println("Elevator at "  + floorat);
+		System.out.println("Person at "  + person.getOnFloorAt());	
+		checkDoors();
+		changeDoors();
+		checkDoors();
+		while (floorat != person.getGetOffFloor()) {
+			if (floorat < person.getGetOffFloor()) {  
+				movingElevator(true);
+				person.setOnFloorAt(floorat);
+			} else {
+				movingElevator(false);
+				person.setOnFloorAt(floorat);
+			}
+		}	
+		System.out.println("Elevator at "  + floorat);
+		System.out.println("Person at "  + person.getOnFloorAt());	
+		checkDoors();
+		changeDoors();
+		checkDoors();
 	}
 	
-	private boolean openDoors() {
-		doorsOpened = true;
-		return doorsOpened;
-	}
-	
-	private boolean closeDoors() {
-		doorsOpened = true;
-		return doorsOpened;
+	private void changeDoors() {
+		if (doorsOpened) {
+				doorsOpened = false;
+				doorsClosed = true; 
+			} else {
+				doorsOpened = true;
+				doorsClosed = false;
+			}
 	}
 	
 	private void setFloorAt(int floorat) {
-		this.floorAt = floorat;
+		this.floorat = floorat;
 	}
 	
 	public int getFloorAt() {
-		return floorAt;
+		return floorat;
 	}
 	
 	private boolean moveUp() {
 		if (checkMax()) { 
-			floorAt = floorAt + 1;
+			floorat = floorat + 1;
 		} else
 			System.out.println("Elevator at topfloor!");
 			return checkMax();
@@ -57,7 +88,7 @@ public class Elevator implements Runnable {
 	
 	private boolean moveDown() {
 		if (checkMin()) { 
-			floorAt = floorAt - 1;
+			floorat = floorat - 1;
 		} else
 			System.out.println("Elevator at bottomfloor!");
 			return checkMin();
@@ -65,7 +96,7 @@ public class Elevator implements Runnable {
 	
 	private boolean checkMin() {
 		boolean check = false;
-		if (floorAt > 0) {
+		if (floorat > 0) {
 			check = true;
 		}
 		return check;
@@ -73,7 +104,7 @@ public class Elevator implements Runnable {
 	
 	private boolean checkMax() {
 		boolean check = false;
-		if (floorAt < 5) {
+		if (floorat < 5) {
 			check = true;
 		}
 		return check;
@@ -84,24 +115,19 @@ public class Elevator implements Runnable {
 		if (direction) {
 			check = moveUp();
 			if (check) {
-				System.out.println("Elevator at floor: " + getFloorAt());
+				System.out.println("Moving up!");
 			} 
 		} else { 
 			check = moveDown();
 			if (check) {
-				System.out.println("Elevator at floor: " + getFloorAt());
+				System.out.println("Moving down!");
 			}
 		}
 	}
 	
-	private void checkDoors(boolean rndBool) {
-		if (rndBool) {
-			if (openDoors()) {
+	private void checkDoors() {
+		if (doorsOpened) {
 				System.out.println("Doors opened!");
-			}
-			if (closeDoors()) {
-				System.out.println("Doors closed!");
-			}
+			} else System.out.println("Doors closed!");
 		}
-	}
 }
