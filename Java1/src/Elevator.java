@@ -4,70 +4,88 @@ import java.util.*;
 
 public class Elevator implements Runnable {
 	int floorat = 0;
-	boolean doorsOpened = false;
-	boolean doorsClosed = false;
+	boolean doorsopened = false;
+	boolean prbutton = false;
+	int turns = 0;
 	
 	@Override
 	public void run() {
 		Random rndint = new Random();
-		Random rndbool = new Random();
 		List<Person> personlist = new ArrayList<Person>();
-		//if (rndbool.nextBoolean()) {
-			Elevator elevator = new Elevator();
-			setFloorAt(0);
-			doorsOpened = true;
+		this.setFloorAt(0);
+		this.doorsopened = true;
+		while (turns < 3) {
 			Person person = new Person();
-			person.setOnFloorAt(4);
-			person.setGetOffFloor(0);
-			person.setGetOnFloor(4);
+			int rndfloorgetoff = rndint.nextInt(5);
+			int rndfloorgeton = rndint.nextInt(5);
+			while (rndfloorgetoff == rndfloorgeton) {
+				rndfloorgetoff = rndint.nextInt(5);
+				rndfloorgeton = rndint.nextInt(5);
+			}
+			person.setGetOffFloor(rndfloorgetoff);
+			person.setGetOnFloor(rndfloorgeton);
+			person.setOnFloorAt(rndfloorgeton);
+			person.setDoorsOpened(false);
 			personlist.add(person);
+			System.out.println("Listan innehåller: " + personlist.size());
+			System.out.println("Person at "  + person.getOnFloorAt());
+			System.out.println("Elevator at floor: " + this.floorat);
+			System.out.println("Person wants to go to "  + person.getGetOffFloor());
+			if (!this.doorsopened && person.getDoorsOpened()) {
+				prbutton = true;
+				changeDoors();
+				person.setDoorsOpened(this.doorsopened);
+			} else changeDoors();
+			while (this.floorat != person.getGetOnFloor() || prbutton) {
+				if (this.floorat < person.getGetOnFloor()) {  
+					movingElevator(true);
+					//person.setOnFloorAt(this.floorat);
+				} else {
+					movingElevator(false);
+					//person.setOnFloorAt(this.floorat);
+				} 
+			}
+			prbutton = false;
 			
-		//}	
-		System.out.println("Person at "  + person.getOnFloorAt());
-		System.out.println("Going to " + person.getGetOffFloor());
-		System.out.println("Elevator at floor: " + floorat);
-		checkDoors();
-		changeDoors();
-		checkDoors();
-		while (floorat != person.getGetOnFloor()) {
-			if (floorat < person.getGetOnFloor()) {  
-				movingElevator(true);
-				//person.setOnFloorAt(floorat);
-			} else {
-				movingElevator(false);
-				//person.setOnFloorAt(floorat);
+			if (!doorsopened) {
+				changeDoors();
+				System.out.println("Person steps in elevator at "  + this.floorat);
+				prbutton = true;
+				changeDoors();
+			} 
+			if (!doorsopened) {
+				while (this.floorat != person.getGetOffFloor() && prbutton) {
+					if (this.floorat < person.getGetOffFloor()) {  
+						movingElevator(true);
+						person.setOnFloorAt(this.floorat);
+					} else {
+						movingElevator(false);
+						person.setOnFloorAt(this.floorat);
+					}
+				}
+			}	
+			prbutton = false;
+			
+			if (!doorsopened) {
+				changeDoors();
 			}
-				 
-		}
-		System.out.println("Elevator at "  + floorat);
-		System.out.println("Person at "  + person.getOnFloorAt());	
-		checkDoors();
-		changeDoors();
-		checkDoors();
-		while (floorat != person.getGetOffFloor()) {
-			if (floorat < person.getGetOffFloor()) {  
-				movingElevator(true);
-				person.setOnFloorAt(floorat);
-			} else {
-				movingElevator(false);
-				person.setOnFloorAt(floorat);
-			}
+			System.out.println("Person leaves elevator at "  + this.floorat);
+			personlist.remove(person);
+			System.out.println("Listan innehåller: " + personlist.size());
+			System.out.println();
+			turns++;
 		}	
-		System.out.println("Elevator at "  + floorat);
-		System.out.println("Person at "  + person.getOnFloorAt());	
-		checkDoors();
-		changeDoors();
-		checkDoors();
 	}
 	
 	private void changeDoors() {
-		if (doorsOpened) {
-				doorsOpened = false;
-				doorsClosed = true; 
+		if (doorsopened) {
+				doorsopened = false;
 			} else {
-				doorsOpened = true;
-				doorsClosed = false;
+				doorsopened = true;
 			}
+		if (doorsopened) {
+			System.out.println("Doors opened!");
+		} else System.out.println("Doors closed!");
 	}
 	
 	private void setFloorAt(int floorat) {
@@ -75,12 +93,12 @@ public class Elevator implements Runnable {
 	}
 	
 	public int getFloorAt() {
-		return floorat;
+		return this.floorat;
 	}
 	
 	private boolean moveUp() {
 		if (checkMax()) { 
-			floorat = floorat + 1;
+			this.floorat = this.floorat + 1;
 		} else
 			System.out.println("Elevator at topfloor!");
 			return checkMax();
@@ -88,7 +106,7 @@ public class Elevator implements Runnable {
 	
 	private boolean moveDown() {
 		if (checkMin()) { 
-			floorat = floorat - 1;
+			this.floorat = this.floorat - 1;
 		} else
 			System.out.println("Elevator at bottomfloor!");
 			return checkMin();
@@ -96,7 +114,7 @@ public class Elevator implements Runnable {
 	
 	private boolean checkMin() {
 		boolean check = false;
-		if (floorat > 0) {
+		if (this.floorat > 0) {
 			check = true;
 		}
 		return check;
@@ -104,7 +122,7 @@ public class Elevator implements Runnable {
 	
 	private boolean checkMax() {
 		boolean check = false;
-		if (floorat < 5) {
+		if (this.floorat < 5) {
 			check = true;
 		}
 		return check;
@@ -116,18 +134,18 @@ public class Elevator implements Runnable {
 			check = moveUp();
 			if (check) {
 				System.out.println("Moving up!");
+				System.out.println("Elevator at: " + this.floorat);
 			} 
 		} else { 
 			check = moveDown();
 			if (check) {
 				System.out.println("Moving down!");
+				System.out.println("Elevator at: " + this.floorat);
 			}
 		}
 	}
 	
-	private void checkDoors() {
-		if (doorsOpened) {
-				System.out.println("Doors opened!");
-			} else System.out.println("Doors closed!");
-		}
+	private boolean personPressedButton(Person person, Boolean buttonPressed) {
+		return buttonPressed;
+	}
 }

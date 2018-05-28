@@ -6,10 +6,19 @@ public class Person implements Runnable {
 	private int onFloorAt = 0;
 	private int getOnFloor = 0;
 	private int getOffFloor = 0;
+	private boolean doorsOpened;
 	
 	@Override
 	public void run() {
 		
+	}
+	
+	public void setDoorsOpened(Boolean doorsOpened) {
+		this.doorsOpened = doorsOpened;
+	}
+	
+	public boolean getDoorsOpened() {
+		return doorsOpened;
 	}
 	
 	public int getOnFloorAt() {
