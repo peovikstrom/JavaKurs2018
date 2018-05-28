@@ -1,5 +1,6 @@
-import java.lang.reflect.Array;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class Elevator implements Runnable {
@@ -11,11 +12,21 @@ public class Elevator implements Runnable {
 	@Override
 	public void run() {
 		Random rndint = new Random();
+		
 		List<Person> personlist = new ArrayList<Person>();
+				
 		this.setFloorAt(0);
 		this.doorsopened = true;
-		while (turns < 3) {
+		//while (turns < 5) {
 			Person person = new Person();
+			
+			//Thread personThread = new Thread(person);
+			//personThread.start();
+			ExecutorService executor = Executors.newFixedThreadPool(2);
+			executor.submit(person);
+			executor.submit(person);
+			
+			
 			int rndfloorgetoff = rndint.nextInt(5);
 			int rndfloorgeton = rndint.nextInt(5);
 			while (rndfloorgetoff == rndfloorgeton) {
@@ -74,10 +85,10 @@ public class Elevator implements Runnable {
 			System.out.println("Listan innehåller: " + personlist.size());
 			System.out.println();
 			turns++;
-		}	
+		//}
 	}
 	
-	private void changeDoors() {
+	public void changeDoors() {
 		if (doorsopened) {
 				doorsopened = false;
 			} else {
@@ -88,7 +99,7 @@ public class Elevator implements Runnable {
 		} else System.out.println("Doors closed!");
 	}
 	
-	private void setFloorAt(int floorat) {
+	public void setFloorAt(int floorat) {
 		this.floorat = floorat;
 	}
 	
@@ -128,7 +139,7 @@ public class Elevator implements Runnable {
 		return check;
 	}
 	
-	private void movingElevator(boolean direction) {
+	public void movingElevator(boolean direction) {
 		boolean check = true;
 		if (direction) {
 			check = moveUp();
@@ -143,9 +154,5 @@ public class Elevator implements Runnable {
 				System.out.println("Elevator at: " + this.floorat);
 			}
 		}
-	}
-	
-	private boolean personPressedButton(Person person, Boolean buttonPressed) {
-		return buttonPressed;
 	}
 }
