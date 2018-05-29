@@ -2,8 +2,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		Elevator elevator = new Elevator();
+		Person person1 = new Person(elevator);
 		
-		Thread elevatorThread = new Thread(elevator);
-		elevatorThread.start();
+		Thread personThread1 = new Thread(person1);
+		personThread1.run();
+		
 	}
 }

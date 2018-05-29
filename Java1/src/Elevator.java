@@ -1,17 +1,91 @@
-import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
+import java.util.HashSet;
+import java.util.Set;
 
 public class Elevator implements Runnable {
-	int floorat = 0;
+	public int floorat = 0;
+	int numOfFloors = 5;
 	boolean doorsopened = false;
-	boolean prbutton = false;
-	int turns = 0;
+	
+	private Set<Integer> SetOfFloorButtonsPressed = new HashSet<Integer>();
 	
 	@Override
 	public void run() {
-		Random rndint = new Random();
+		
+	}
+	
+	public void pressButton(int buttonOfFloor) {
+		SetOfFloorButtonsPressed.add(buttonOfFloor);
+	}
+	
+	public void whatButtonsPressed() {
+		System.out.println(SetOfFloorButtonsPressed);
+	}
+}
+	/*public void moveElevator() {
+		//check elevator floor at, send elevator to that floor
+		if (towhatfloor != floorat) {
+			if (towhatfloor < floorat) {
+				moveDown();
+				System.out.println("Moving Down!");
+			} else {
+				moveUp();
+				System.out.println("Moving Up!");
+			}
+		}
+	
+	}
+	
+	public int getWhatFloorOn() {
+		return this.floorat;
+	}
+	
+	private boolean checkMin() {
+		boolean check = false;
+		if (this.floorat > 0) {
+			check = true;
+		}
+		return check;
+	}
+	
+	private boolean checkMax() {
+		boolean check = false;
+		if (this.floorat < this.numOfFloors) {
+			check = true;
+		}
+		return check;
+	}
+	
+	private void moveUp() {
+		if (checkMax()) { 
+			this.floorat = this.floorat + 1;
+		}
+	}
+	
+	private void moveDown() {
+		if (checkMin()) { 
+			this.floorat = this.floorat - 1;
+		}
+	}
+	
+	/*public void setDoorsOpened(Boolean doorsOpened) {
+		doorsopened = doorsOpened;
+	}
+	
+	public boolean getDoorsOpened() {
+		return doorsopened;
+
+	public void changeDoors() {
+		if (doorsopened) {
+			doorsopened = false;
+		} else {
+			doorsopened = true;
+		}
+		if (doorsopened) {
+			System.out.println("Doors opened!");
+		} else System.out.println("Doors closed!");
+	}
+	
+	}		/*Random rndint = new Random();
 		
 		List<Person> personlist = new ArrayList<Person>();
 				
@@ -85,7 +159,7 @@ public class Elevator implements Runnable {
 			System.out.println("Listan innehåller: " + personlist.size());
 			System.out.println();
 			turns++;
-		//}
+		}
 	}
 	
 	public void changeDoors() {
@@ -153,6 +227,6 @@ public class Elevator implements Runnable {
 				System.out.println("Moving down!");
 				System.out.println("Elevator at: " + this.floorat);
 			}
-		}
-	}
-}
+		}*/
+	
+
