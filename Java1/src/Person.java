@@ -14,8 +14,25 @@ public class Person implements Runnable {
 	
 	@Override
 	public void run() {
+		Elevator elevator = new Elevator();
+		int maxFloors = elevator.numOfFloors;
+		onFloorAt = rndFloor(maxFloors);
+		System.out.println("Person is at floor " + onFloorAt);
+		getOffFloor = rndFloor(maxFloors);
+		System.out.println("Person going to floor " + getOffFloor);
+		if (onFloorAt != elevator.floorat) {
+			System.out.println("Pressing button!");
+			elevator.pressElevatorGetHereButton(onFloorAt);
+		} if (elevator.doorsopened) {
+			System.out.println("Enter elevator!");
+			inElevator = true;
+			System.out.println("In elevator!");
+			System.out.println("Pressing button to floor to go to!");
+			elevator.pressElevatorGetHereButton(getOffFloor);
+		}
+				
+		elevator.whatButtonsPressed();
 		
-		pressedButton();
 		
 		//Vart vill jag?
 		//Säg till hissen att komma till mig om den inte redan är hos mig och är öppen
@@ -23,9 +40,8 @@ public class Person implements Runnable {
 		//Är hissen framme där jag vill vara? I så fall hoppa ut om dörrarna är öppna... Vänta några sekunder och bestäm sen vart du vill här näst.
 	}
 	
-	public void pressedButton(Elevator elevator2) {
-		elevator2.pressButton(onFloorAt);
+	public int rndFloor(int maxNumOfFloors) {
+		return rndint.nextInt(maxNumOfFloors); 
 	}
-
 	
 }

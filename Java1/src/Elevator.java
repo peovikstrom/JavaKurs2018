@@ -4,16 +4,16 @@ import java.util.Set;
 public class Elevator implements Runnable {
 	public int floorat = 0;
 	int numOfFloors = 5;
-	boolean doorsopened = false;
+	boolean doorsopened = true;
 	
 	private Set<Integer> SetOfFloorButtonsPressed = new HashSet<Integer>();
 	
 	@Override
 	public void run() {
-		
+
 	}
 	
-	public void pressButton(int buttonOfFloor) {
+	public void pressElevatorGetHereButton(int buttonOfFloor) {
 		SetOfFloorButtonsPressed.add(buttonOfFloor);
 	}
 	
