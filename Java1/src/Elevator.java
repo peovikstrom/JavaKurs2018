@@ -1,70 +1,75 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Elevator implements Runnable {
-	public int floorat = 0;
-	int numOfFloors = 5;
-	boolean doorsopened = true;
+public class Elevator extends Thread {
+	public int elevatorAtFloor;
+	int bottomFloor;
+	int topFloor;
+	boolean doorsopened;
+	boolean direction;
 	
-	private Set<Integer> SetOfFloorButtonsPressed = new HashSet<Integer>();
+	public Set<Integer> SetOffFloorButtonsPressed = new HashSet<Integer>();
+
+	public Elevator(int floorAt, int numOfFloors, boolean doorsOpened) {
+		this.elevatorAtFloor = floorAt;
+		this.topFloor = numOfFloors;
+		this.bottomFloor = 0;
+		this.doorsopened = doorsOpened;
+		this.direction = true;
+		this.start();
+	}
 	
 	@Override
 	public void run() {
-
+		while (true) {
+			try        
+			{
+			    Thread.sleep(1000);
+			} 
+			catch(InterruptedException ex) 
+			{
+			    Thread.currentThread().interrupt();
+			}
+			if (!SetOffFloorButtonsPressed.isEmpty())
+			moveElevator();
+		}
 	}
-	
-	public void pressElevatorGetHereButton(int buttonOfFloor) {
-		SetOfFloorButtonsPressed.add(buttonOfFloor);
+
+	public synchronized void pressElevatorGoToButton(int buttonOfFloor) {
+		SetOffFloorButtonsPressed.add(buttonOfFloor);
+		System.out.println(SetOffFloorButtonsPressed);
 	}
 	
 	public void whatButtonsPressed() {
-		System.out.println(SetOfFloorButtonsPressed);
+		System.out.println(SetOffFloorButtonsPressed);
 	}
-}
-	/*public void moveElevator() {
-		//check elevator floor at, send elevator to that floor
-		if (towhatfloor != floorat) {
-			if (towhatfloor < floorat) {
-				moveDown();
-				System.out.println("Moving Down!");
+
+	public void moveElevator() {
+		if (this.direction) {
+			this.moveUp();
+			System.out.println("Moving Up!");
 			} else {
-				moveUp();
-				System.out.println("Moving Up!");
+				this.moveDown();
+				System.out.println("Moving Down!");
 			}
+		System.out.println("Elevator at " + elevatorAtFloor);
 		}
 	
-	}
-	
-	public int getWhatFloorOn() {
-		return this.floorat;
-	}
-	
-	private boolean checkMin() {
-		boolean check = false;
-		if (this.floorat > 0) {
-			check = true;
+	private boolean moveUp() {
+		if (this.elevatorAtFloor != this.topFloor) { 
+			this.elevatorAtFloor++;
+		} else {
+			direction = false;
 		}
-		return check;
+		return direction;
 	}
 	
-	private boolean checkMax() {
-		boolean check = false;
-		if (this.floorat < this.numOfFloors) {
-			check = true;
-		}
-		return check;
-	}
-	
-	private void moveUp() {
-		if (checkMax()) { 
-			this.floorat = this.floorat + 1;
-		}
-	}
-	
-	private void moveDown() {
-		if (checkMin()) { 
-			this.floorat = this.floorat - 1;
-		}
+	private boolean moveDown() {
+		if (this.elevatorAtFloor != this.bottomFloor) {
+			this.elevatorAtFloor--;
+		} else {
+				direction = true;
+		} return direction;
 	}
 	
 	/*public void setDoorsOpened(Boolean doorsOpened) {
@@ -72,7 +77,7 @@ public class Elevator implements Runnable {
 	}
 	
 	public boolean getDoorsOpened() {
-		return doorsopened;
+		return doorsopened;*/
 
 	public void changeDoors() {
 		if (doorsopened) {
@@ -85,7 +90,7 @@ public class Elevator implements Runnable {
 		} else System.out.println("Doors closed!");
 	}
 	
-	}		/*Random rndint = new Random();
+}		/*Random rndint = new Random();
 		
 		List<Person> personlist = new ArrayList<Person>();
 				

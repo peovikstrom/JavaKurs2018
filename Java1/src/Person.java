@@ -1,47 +1,60 @@
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class Person implements Runnable {
+public class Person extends Thread {
 
 	private int onFloorAt = 0;
-	private boolean inElevator = false;
 	private int getOffFloor = 0;
-	private Random rndint = new Random();
+	private boolean inElevator = false;
 	private Elevator elevator;
+	private String name;
 	
-	public Person(Elevator elevator) {		//Konstruktor
-		
+	public Person(Elevator elevator, String name) {		//Konstruktor
+		this.elevator = elevator;
+		this.name = name;
+		resetStartAndDestination();
+		this.start();
 	}
 	
 	@Override
 	public void run() {
-		Elevator elevator = new Elevator();
-		int maxFloors = elevator.numOfFloors;
-		onFloorAt = rndFloor(maxFloors);
-		System.out.println("Person is at floor " + onFloorAt);
-		getOffFloor = rndFloor(maxFloors);
-		System.out.println("Person going to floor " + getOffFloor);
-		if (onFloorAt != elevator.floorat) {
-			System.out.println("Pressing button!");
-			elevator.pressElevatorGetHereButton(onFloorAt);
-		} if (elevator.doorsopened) {
-			System.out.println("Enter elevator!");
-			inElevator = true;
-			System.out.println("In elevator!");
-			System.out.println("Pressing button to floor to go to!");
-			elevator.pressElevatorGetHereButton(getOffFloor);
-		}
+		System.out.println(this.name + " is at floor " + onFloorAt);
+		System.out.println(this.name + " going to floor " + getOffFloor);
+		while (true) {
+			try        
+			{
+			    Thread.sleep(1000);
+			} 
+			catch(InterruptedException ex) 
+			{
+			    Thread.currentThread().interrupt();
+			}
+			if (onFloorAt == elevator.elevatorAtFloor) {
+				if (elevator.doorsopened) {
+					System.out.println(this.name + " enters elevator!");
+					this.inElevator = true;
+					elevator.doorsopened = false;
+					if (this.inElevator) {
+						System.out.println(this.name + " is in elevator!");
+					
+						System.out.println(this.name + " pressing button to floor to go to!");
+						elevator.pressElevatorGoToButton(getOffFloor);
+					}
+				}
 				
-		elevator.whatButtonsPressed();
-		
-		
-		//Vart vill jag?
-		//Säg till hissen att komma till mig om den inte redan är hos mig och är öppen
-		//När jag är i hissen, berätta för den vart jag vill åka
-		//Är hissen framme där jag vill vara? I så fall hoppa ut om dörrarna är öppna... Vänta några sekunder och bestäm sen vart du vill här näst.
-	}
+			} else { 
+				elevator.pressElevatorGoToButton(onFloorAt);
+			}
+		} 
+	}		
 	
-	public int rndFloor(int maxNumOfFloors) {
-		return rndint.nextInt(maxNumOfFloors); 
+	public int rndFloor() {
+		return ThreadLocalRandom.current().nextInt(0, elevator.topFloor + 1); 
+	}
+
+	private void resetStartAndDestination() {
+		onFloorAt = rndFloor();
+		getOffFloor = rndFloor();
 	}
 	
 }
