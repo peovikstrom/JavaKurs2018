@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class Elevator extends Thread {
@@ -9,6 +10,7 @@ public class Elevator extends Thread {
 	boolean direction;
 	
 	public Set<Integer> SetOffFloorButtonsPressed = new HashSet<Integer>();
+	public Set<Integer> SetOnFloorButtonsPressed = new HashSet<Integer>();
 
 	public Elevator(int floorAt, int numOfFloors, boolean doorsOpened) {
 		this.elevatorAtFloor = floorAt;
@@ -30,20 +32,80 @@ public class Elevator extends Thread {
 			{
 			    Thread.currentThread().interrupt();
 			}
-			if (!SetOffFloorButtonsPressed.isEmpty())
-			moveElevator();
+			if (SetOffFloorButtonsPressed.isEmpty())
+			 if  (SetOnFloorButtonsPressed.isEmpty()) {
+			 } else moveElevator();
 		}
 	}
 
-	public synchronized void pressElevatorGoToButton(int buttonOfFloor) {
-		SetOffFloorButtonsPressed.add(buttonOfFloor);
-		System.out.println(SetOffFloorButtonsPressed);
+	public synchronized void pressElevatorGoToButton(int buttonOfFloor, boolean listToCheck) {
+		if (listToCheck) {
+			SetOffFloorButtonsPressed.add(buttonOfFloor);
+			System.out.println(SetOffFloorButtonsPressed);
+		} else {
+			SetOnFloorButtonsPressed.add(buttonOfFloor);
+			System.out.println(SetOnFloorButtonsPressed);
+		}
+	}
+	
+	public boolean checkFloorInList(int elevatorAtFloor, boolean listToCheck) {
+		if (listToCheck) {
+			Iterator<Integer> iterator = SetOnFloorButtonsPressed.iterator();
+		    while(iterator.hasNext()) {
+		        Integer setElement = iterator.next();
+		        if(setElement==elevatorAtFloor) {
+		            return true;
+		        }
+		        return false;
+		    }
+		} else {
+			Iterator<Integer> iterator = SetOffFloorButtonsPressed.iterator();
+		    while(iterator.hasNext()) {
+		        Integer setElement = iterator.next();
+		        if(setElement==elevatorAtFloor) {
+		            return true;
+		        }
+		        return false;
+		    }
+		}
+		return listToCheck;
+	}
+	
+	public void removeFloorInList(int elevatorAtFloor, boolean listToCheck) {
+		if (listToCheck) {
+			Iterator<Integer> iterator = SetOnFloorButtonsPressed.iterator();
+		    while(iterator.hasNext()) {
+		        Integer setElement = iterator.next();
+		        if(setElement==elevatorAtFloor) {
+		            iterator.remove();
+		        }
+		    }
+		} else {
+			Iterator<Integer> iterator = SetOffFloorButtonsPressed.iterator();
+		    while(iterator.hasNext()) {
+		        Integer setElement = iterator.next();
+		        if(setElement==elevatorAtFloor) {
+		            iterator.remove();
+		        }
+		    }
+		}
 	}
 	
 	public void whatButtonsPressed() {
 		System.out.println(SetOffFloorButtonsPressed);
 	}
 
+	public void removePersonFromElevatorList() {
+		Iterator<Integer> iterator = SetOffFloorButtonsPressed.iterator();
+	    while(iterator.hasNext()) {
+	        Integer setElement = iterator.next();
+	        if(setElement==elevatorAtFloor) {
+	            iterator.remove();
+	        }
+	    }
+	    System.out.println(SetOffFloorButtonsPressed);
+	}
+	
 	public void moveElevator() {
 		if (this.direction) {
 			this.moveUp();
