@@ -32,23 +32,41 @@ public class Elevator extends Thread {
 			{
 			    Thread.currentThread().interrupt();
 			}
-			if (SetOffFloorButtonsPressed.isEmpty())
-			 if  (SetOnFloorButtonsPressed.isEmpty()) {
-			 } else moveElevator();
+			if (!(SetOffFloorButtonsPressed.isEmpty() && SetOnFloorButtonsPressed.isEmpty())) {
+				if (SetOffFloorButtonsPressed.isEmpty()) {
+					if (SetOnFloorButtonsPressed.isEmpty()) {
+						if (checkFloorInList(elevatorAtFloor, true)) {
+							 removeFloorInList(elevatorAtFloor, true);
+							 changeDoors();
+						 } else
+						 {
+							 moveElevator();
+						 }
+					}	
+				} else {
+					if (checkFloorInList(elevatorAtFloor, false)) {
+						removeFloorInList(elevatorAtFloor, false);
+						changeDoors();
+					} else
+					{
+						moveElevator();
+					}
+				}
+			}
 		}
-	}
+	}		
 
 	public synchronized void pressElevatorGoToButton(int buttonOfFloor, boolean listToCheck) {
 		if (listToCheck) {
-			SetOffFloorButtonsPressed.add(buttonOfFloor);
-			System.out.println(SetOffFloorButtonsPressed);
-		} else {
 			SetOnFloorButtonsPressed.add(buttonOfFloor);
-			System.out.println(SetOnFloorButtonsPressed);
+			changeDoors();
+		} else {
+			SetOffFloorButtonsPressed.add(buttonOfFloor);
+			changeDoors();
 		}
 	}
 	
-	public boolean checkFloorInList(int elevatorAtFloor, boolean listToCheck) {
+	public synchronized boolean checkFloorInList(int elevatorAtFloor, boolean listToCheck) {
 		if (listToCheck) {
 			Iterator<Integer> iterator = SetOnFloorButtonsPressed.iterator();
 		    while(iterator.hasNext()) {
@@ -71,7 +89,7 @@ public class Elevator extends Thread {
 		return listToCheck;
 	}
 	
-	public void removeFloorInList(int elevatorAtFloor, boolean listToCheck) {
+	public synchronized void removeFloorInList(int elevatorAtFloor, boolean listToCheck) {
 		if (listToCheck) {
 			Iterator<Integer> iterator = SetOnFloorButtonsPressed.iterator();
 		    while(iterator.hasNext()) {
@@ -91,7 +109,7 @@ public class Elevator extends Thread {
 		}
 	}
 	
-	public void whatButtonsPressed() {
+	/*public void whatButtonsPressed() {
 		System.out.println(SetOffFloorButtonsPressed);
 	}
 
@@ -104,7 +122,7 @@ public class Elevator extends Thread {
 	        }
 	    }
 	    System.out.println(SetOffFloorButtonsPressed);
-	}
+	}*/
 	
 	public void moveElevator() {
 		if (this.direction) {
@@ -141,7 +159,7 @@ public class Elevator extends Thread {
 	public boolean getDoorsOpened() {
 		return doorsopened;*/
 
-	public void changeDoors() {
+	private void changeDoors() {
 		if (doorsopened) {
 			doorsopened = false;
 		} else {

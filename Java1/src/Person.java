@@ -18,9 +18,7 @@ public class Person extends Thread {
 	
 	@Override
 	public void run() {
-		System.out.println(this.name + " is at floor " + onFloorAt);
-		System.out.println("Hissen är på: " + elevator.elevatorAtFloor);
-		elevator.pressElevatorGoToButton(onFloorAt,false);
+		personStart();
 		while (true) {
 			try        
 			{
@@ -30,29 +28,26 @@ public class Person extends Thread {
 			{
 			    Thread.currentThread().interrupt();
 			}
-			if (!elevator.doorsopened) {
-				System.out.println(elevator.elevatorAtFloor);
-				if (elevator.checkFloorInList(elevator.elevatorAtFloor, true)) {
-					this.inElevator = true;
-					elevator.removeFloorInList(elevator.elevatorAtFloor, true);
-					System.out.println(elevator.SetOnFloorButtonsPressed);
-					/*if (!this.inElevator) {
-					if (onFloorAt == elevator.elevatorAtFloor) {
-						
-							System.out.println(this.name + " enters elevator!");
-							this.inElevator = true;
-							System.out.println(this.name + " pressing button to floor to go to!");
-							elevator.pressElevatorGoToButton(getOffFloor,true);
-							System.out.println(this.name + " going to floor " + getOffFloor);
-						} 
-					} else {
-						//elevator.changeDoors();
-						//this.inElevator = false;
-					}*/
-					//elevator.changeDoors();
-					//elevator.doorsopened = false;
-				} 
-			} else elevator.changeDoors();
+			if (elevator.doorsopened) {
+				if (!this.inElevator) {
+					if (elevator.checkFloorInList(elevator.elevatorAtFloor, true)) {
+						this.inElevator = true;
+						System.out.println(this.name + " enters elevator!");
+						elevator.pressElevatorGoToButton(getOffFloor,true);
+					}
+				} else {
+					/*if (!elevator.doorsopened) {
+						//elevator.pressElevatorGoToButton(getOffFloor,false);
+					} else {*/
+						if (elevator.checkFloorInList(getOffFloor, false)) {
+							System.out.println(this.name + " leaving elevator!");
+							elevator.removeFloorInList(elevator.elevatorAtFloor, false);
+						}
+					}
+				}
+			//} else { 
+				//elevator.changeDoors();
+			//}	
 			
 			/*else {
 				if (this.inElevator) {
@@ -67,6 +62,15 @@ public class Person extends Thread {
 			
 		} 
 	}		
+	
+	private synchronized void personStart() {
+		System.out.println(this.name + " is at floor " + onFloorAt);
+		System.out.println("Elevator is at floor : " + elevator.elevatorAtFloor);
+		System.out.println(this.name + " going to floor " + getOffFloor);
+		System.out.println(this.name + " pressing button outside elevator at " + onFloorAt);
+		elevator.pressElevatorGoToButton(onFloorAt,false);
+		System.out.println("Elevator going to floor " + onFloorAt);
+	}
 	
 	public int rndFloor() {
 		return ThreadLocalRandom.current().nextInt(0, elevator.topFloor + 1); 
