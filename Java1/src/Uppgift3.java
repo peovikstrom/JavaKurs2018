@@ -38,7 +38,7 @@ public class Uppgift3 {
 		                    System.out.println("Duplicate Element is : "+arrayOfInt[j]);
 		                }
 		            }
-		        }
+		        } System.out.println();
 			} else 
 				if (input.equalsIgnoreCase("s")) {
 					//Plocka ut samtliga dubletter ur ett Set av integers.
@@ -59,6 +59,7 @@ public class Uppgift3 {
 			        System.out.println("]");
 			        System.out.println();
 			        System.out.println("Elements in Set is: " + set);
+			        System.out.println();
 				
 			} else 
 				if (input.equalsIgnoreCase("l")) {
@@ -74,6 +75,7 @@ public class Uppgift3 {
 					listaOfInt.add(80);
 					System.out.println("Element added at the end of List!");
 					System.out.println("Elements in List is : " + listaOfInt);
+					System.out.println();
 			} else 
 					if (input.equalsIgnoreCase("r")) {
 						//Plocka bort första givna värdet ur en Array av integers.
@@ -101,6 +103,7 @@ public class Uppgift3 {
 					        	} else {
 					        		if (!checkRemoved) {
 					        			System.out.println("Removed first given element : " + givenValue);
+					        			System.out.println();
 					        			givenValue = 0; j=j-1;
 					        			checkRemoved = true;
 					        		}
@@ -155,6 +158,7 @@ public class Uppgift3 {
 				        }
 				        System.out.println();
 				        System.out.println("Map Elements " + m1);
+				        System.out.println();
 					}
 		} scanner.close();
 	}
