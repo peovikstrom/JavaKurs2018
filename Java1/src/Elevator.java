@@ -1,6 +1,5 @@
-import java.util.HashSet;
+import java.util.*;
 import java.util.Iterator;
-import java.util.Set;
 
 public class Elevator extends Thread {
 	public int elevatorAtFloor;
@@ -9,8 +8,8 @@ public class Elevator extends Thread {
 	boolean doorsopened;
 	boolean direction;
 	
-	public Set<Integer> SetOffFloorButtonsPressed = new HashSet<Integer>();
-	public Set<Integer> SetOnFloorButtonsPressed = new HashSet<Integer>();
+	public List<Integer> listOffFloorButtonsPressed = new ArrayList<Integer>();
+	public List<Integer> listOnFloorButtonsPressed = new ArrayList<Integer>();
 
 	public Elevator(int floorAt, int numOfFloors, boolean doorsOpened) {
 		this.elevatorAtFloor = floorAt;
@@ -32,43 +31,44 @@ public class Elevator extends Thread {
 			{
 			    Thread.currentThread().interrupt();
 			}
-			if (!(SetOffFloorButtonsPressed.isEmpty() && SetOnFloorButtonsPressed.isEmpty())) {
-				if (SetOffFloorButtonsPressed.isEmpty()) {
-					if (SetOnFloorButtonsPressed.isEmpty()) {
+			if (/*!(listOffFloorButtonsPressed.isEmpty() && */listOnFloorButtonsPressed.isEmpty()) {
+				/*if (SetOffFloorButtonsPressed.isEmpty()) {
+					/*if (SetOnFloorButtonsPressed.isEmpty()) {*/
+						//System.out.println(checkFloorInList(elevatorAtFloor, true));
+						//System.out.println(listOnFloorButtonsPressed);
 						if (checkFloorInList(elevatorAtFloor, true)) {
-							 removeFloorInList(elevatorAtFloor, true);
-							 changeDoors();
+							 
+							changeDoors();
+							 moveElevator();
 						 } else
 						 {
 							 moveElevator();
 						 }
-					}	
+					//}	
 				} else {
-					if (checkFloorInList(elevatorAtFloor, false)) {
+					/*if (checkFloorInList(elevatorAtFloor, false)) {
 						removeFloorInList(elevatorAtFloor, false);
 						changeDoors();
 					} else
-					{
+					{*/
 						moveElevator();
 					}
 				}
-			}
-		}
+			//}
+		//}
 	}		
 
 	public synchronized void pressElevatorGoToButton(int buttonOfFloor, boolean listToCheck) {
 		if (listToCheck) {
-			SetOnFloorButtonsPressed.add(buttonOfFloor);
-			changeDoors();
+			listOnFloorButtonsPressed.add(buttonOfFloor);
 		} else {
-			SetOffFloorButtonsPressed.add(buttonOfFloor);
-			changeDoors();
+			listOffFloorButtonsPressed.add(buttonOfFloor);
 		}
 	}
 	
 	public synchronized boolean checkFloorInList(int elevatorAtFloor, boolean listToCheck) {
 		if (listToCheck) {
-			Iterator<Integer> iterator = SetOnFloorButtonsPressed.iterator();
+			Iterator<Integer> iterator = listOnFloorButtonsPressed.iterator();
 		    while(iterator.hasNext()) {
 		        Integer setElement = iterator.next();
 		        if(setElement==elevatorAtFloor) {
@@ -77,7 +77,7 @@ public class Elevator extends Thread {
 		        return false;
 		    }
 		} else {
-			Iterator<Integer> iterator = SetOffFloorButtonsPressed.iterator();
+			Iterator<Integer> iterator = listOffFloorButtonsPressed.iterator();
 		    while(iterator.hasNext()) {
 		        Integer setElement = iterator.next();
 		        if(setElement==elevatorAtFloor) {
@@ -91,7 +91,7 @@ public class Elevator extends Thread {
 	
 	public synchronized void removeFloorInList(int elevatorAtFloor, boolean listToCheck) {
 		if (listToCheck) {
-			Iterator<Integer> iterator = SetOnFloorButtonsPressed.iterator();
+			Iterator<Integer> iterator = listOnFloorButtonsPressed.iterator();
 		    while(iterator.hasNext()) {
 		        Integer setElement = iterator.next();
 		        if(setElement==elevatorAtFloor) {
@@ -99,7 +99,7 @@ public class Elevator extends Thread {
 		        }
 		    }
 		} else {
-			Iterator<Integer> iterator = SetOffFloorButtonsPressed.iterator();
+			Iterator<Integer> iterator = listOffFloorButtonsPressed.iterator();
 		    while(iterator.hasNext()) {
 		        Integer setElement = iterator.next();
 		        if(setElement==elevatorAtFloor) {
@@ -159,7 +159,7 @@ public class Elevator extends Thread {
 	public boolean getDoorsOpened() {
 		return doorsopened;*/
 
-	private void changeDoors() {
+	public void changeDoors() {
 		if (doorsopened) {
 			doorsopened = false;
 		} else {
