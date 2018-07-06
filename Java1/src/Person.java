@@ -12,7 +12,7 @@ public class Person extends Thread {
 	public Person(Elevator elevator, String name) {		//Konstruktor
 		this.elevator = elevator;
 		this.name = name;
-		this.inElevator = inElevator;
+		//this.inElevator = inElevator;
 		resetStartAndDestination();
 		this.elevator.listOnFloorButtonsPressed.add(onFloorAt);
 		System.out.println(this.elevator.listOnFloorButtonsPressed);
@@ -31,13 +31,17 @@ public class Person extends Thread {
 			{
 			    Thread.currentThread().interrupt();
 			}
-				if (elevator.doorsopened && elevator.checkFloorInList(this.onFloorAt, false)) {
-					this.inElevator = true;
-					elevator.pressElevatorGoToButton(elevator.elevatorAtFloor, false);
-				}
+			if (elevator.doorsopened && elevator.checkFloorInList(this.onFloorAt, false) && !this.inElevator) {
+				this.inElevator = true;
+				elevator.pressElevatorGoToButton(elevator.elevatorAtFloor, false);
+			} else {
+					if (elevator.doorsopened && elevator.checkFloorInList(this.onFloorAt, false) && this.inElevator) {
+						this.inElevator = false;
+					}
 			}
+		}
 				
-			}	
+	}	
 				
 	private synchronized void personStart() {
 		System.out.println(this.name + " is at floor " + onFloorAt);

@@ -86,14 +86,9 @@ public class Elevator extends Thread {
 	
 	public synchronized void removeFloorInList(int elevatorAtFloor, boolean listToCheck) {
 		if (listToCheck) {
-			Iterator<Integer> iterator = listOnFloorButtonsPressed.iterator();
-		    while(iterator.next().equals(listOnFloorButtonsPressed)) {
-		        Integer setElement = iterator.next();
-		        if(setElement==elevatorAtFloor) {
-		        	iterator.remove();
-		        }
+							listOnFloorButtonsPressed.remove(0);
 		    } System.out.println(listOnFloorButtonsPressed);
-		} else {
+		} /*else {
 			Iterator<Integer> iterator = listOffFloorButtonsPressed.iterator();
 		    while(iterator.hasNext()) {
 		        Integer setElement = iterator.next();
@@ -102,7 +97,7 @@ public class Elevator extends Thread {
 		        }
 		    }
 		}
-	}
+	}*/
 	
 	public void moveElevator() {
 		if (this.direction) {
