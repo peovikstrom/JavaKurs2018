@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Person extends Thread {
@@ -30,8 +31,10 @@ public class Person extends Thread {
 			{
 			    Thread.currentThread().interrupt();
 			}
-			
-				//System.out.println(this.elevator.listOnFloorButtonsPressed);
+				if (elevator.doorsopened && elevator.checkFloorInList(this.onFloorAt, false)) {
+					this.inElevator = true;
+					elevator.pressElevatorGoToButton(elevator.elevatorAtFloor, false);
+				}
 			}
 				
 			}	
@@ -41,6 +44,9 @@ public class Person extends Thread {
 		System.out.println(this.name + " going to floor " + getOffFloor);
 		
 		elevator.pressElevatorGoToButton(onFloorAt,false);
+		
+		Collections.sort(this.elevator.listOnFloorButtonsPressed);
+		System.out.println(this.elevator.listOnFloorButtonsPressed);
 		if (onFloorAt == elevator.elevatorAtFloor && elevator.doorsopened) {
 			this.inElevator = true;
 		}
